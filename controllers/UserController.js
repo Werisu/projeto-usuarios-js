@@ -74,9 +74,17 @@ class UserController {
 
         // let -> só existe dentro do método
         let user = {};
+        let isValid = true;
 
         //Spread 
         [...this.formEl.elements].forEach(function (field, index) {
+
+            if (['name', 'email', 'password'].indexOf(field.name) > -1 && !field.value) {
+
+                field.parentElement.classList.add("has-error");
+                isValid = false; // interrompe o formulário
+
+            }
 
             //código
             if (field.name == "gender") {
@@ -91,6 +99,10 @@ class UserController {
                 user[field.name] = field.value;
             }
         });
+
+        if (!isValid) {
+            return false; // não envia formulário
+        }
 
         // um objeto é variável que estancia uma classe
         return new User(user.name, user.gender, user.birth, user.country, user.email, user.password, user.photo, user.admin);
