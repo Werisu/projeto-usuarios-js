@@ -6,6 +6,16 @@ class UserController {
         this.tableEl = document.getElementById(tableId);
 
         this.onSubmit();
+        this.onEdit();
+
+    }
+
+    onEdit() {
+
+        document.querySelector("#box-user-update .btn-cancel").addEventListener("click",
+            e => {
+                this.showPanelCreate();
+            });
 
     }
 
@@ -130,15 +140,30 @@ class UserController {
             <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td> 
             <td>${Utils.dateFormat(dataUser.register)}</td>
             <td>
-                <button type = "button" class = "btn btn-primary btn-xs btn-flat"> Editar </button>
+                <button type = "button" class = "btn btn-primary btn-xs btn-flat btn-edit"> Editar </button>
                 <button type = "button" class = "btn btn-danger btn-xs btn-flat"> Excluir </button>
             </td>
     `;
+
+        tr.querySelector(".btn-edit").addEventListener("click", e => {
+            console.log(JSON.parse(tr.dataset.user));
+            this.showPanelUpdate();
+        });
 
         this.tableEl.appendChild(tr);
 
         this.updateCount();
 
+    }
+
+    showPanelCreate() {
+        document.querySelector("#box-user-create").style.display = "block";
+        document.querySelector("#box-user-update").style.display = "none";
+    }
+
+    showPanelUpdate() {
+        document.querySelector("#box-user-create").style.display = "none";
+        document.querySelector("#box-user-update").style.display = "block";
     }
 
     updateCount() {
