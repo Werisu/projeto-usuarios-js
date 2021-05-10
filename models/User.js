@@ -35,7 +35,7 @@ class User {
     }
 
     get email() {
-        return this._emal;
+        return this._email;
     }
 
     get password() {
@@ -56,6 +56,23 @@ class User {
 
     set photo(photo) {
         this._photo = photo;
+    }
+
+    loadFromJSON(json) {
+
+        for (let name in json) {
+
+            switch (name) {
+                case '_register':
+                    this[name] = new Date(json[name]);
+                    break;
+                default:
+                    this[name] = json[name];
+                    break;
+            }
+
+        }
+
     }
 
 }
